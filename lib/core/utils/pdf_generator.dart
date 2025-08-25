@@ -19,3 +19,12 @@ class PdfGenerator {
             child: pw.Image(image, fit: pw.BoxFit.contain),
           );
         },
+      ),
+    );
+
+    final output = await getTemporaryDirectory();
+    final file = File('${output.path}/document_${DateTime.now().millisecondsSinceEpoch}.pdf');
+    await file.writeAsBytes(await pdf.save());
+    return file;
+  }
+}
