@@ -23,3 +23,24 @@ class WavePainter extends CustomPainter {
       canvas, 
       size, 
       color: AppColors.waveSecondary.withOpacity(0.6), 
+      offset: math.pi / 2, 
+      heightOffset: 10, 
+      amplitude: 25
+    );
+
+    _drawWave(
+      canvas, 
+      size, 
+      color: AppColors.wavePrimary, 
+      offset: 0, 
+      heightOffset: 0, 
+      amplitude: 20
+    );
+  }
+
+  void _drawWave(
+    Canvas canvas, 
+    Size size, {
+    required Color color, 
+    required double offset, 
+    required double heightOffset, 
