@@ -44,3 +44,27 @@ class WavePainter extends CustomPainter {
     required Color color, 
     required double offset, 
     required double heightOffset, 
+    required double amplitude
+  }) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+    path.moveTo(0, 0);
+    
+    // The base height for this wave, starting from the bottom of the available size
+    final baseHeight = size.height - 40 + heightOffset; // 40 is padding for the amplitude
+
+    path.lineTo(0, baseHeight);
+
+    for (double i = 0; i <= size.width; i++) {
+      final waveOffset = math.sin((i / size.width * 2 * math.pi) + (animationValue * 2 * math.pi) + offset);
+      path.lineTo(i, baseHeight + waveOffset * amplitude);
+    }
+
+    path.lineTo(size.width, 0);
+    path.close();
+
+    canvas.drawPath(path, paint);
+  }
