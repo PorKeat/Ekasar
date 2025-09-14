@@ -19,3 +19,24 @@ void main() async {
   }
   
   runApp(
+    ProviderScope(
+      overrides: [
+        documentRepositoryProvider.overrideWithValue(DocumentRepository(isar)),
+        camerasProvider.overrideWith((ref) => cameras),
+      ],
+      child: const PDFScannerApp(),
+    ),
+  );
+}
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+class PDFScannerApp extends ConsumerWidget {
+  const PDFScannerApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+
+    return MaterialApp(
