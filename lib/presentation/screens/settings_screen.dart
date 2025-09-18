@@ -37,3 +37,25 @@ class SettingsScreen extends ConsumerWidget {
                   activeColor: AppColors.primary,
                   onChanged: (value) async {
                     final success = await ref.read(authProvider.notifier).toggleAppLock(value);
+                    if (!success && context.mounted) {
+                      CustomSnackBar.show(
+                        context,
+                        title: 'Authentication Failed',
+                        message: 'Could not verify your identity.',
+                        type: SnackBarType.error,
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 24),
+            
+            const _SectionHeader(title: 'Appearance'),
+            Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: ListTile(
+                leading: const Icon(Icons.dark_mode, color: AppColors.primary),
+                title: const Text('App Theme'),
+                subtitle: Text(_getThemeName(themeMode)),
+                trailing: const Icon(Icons.chevron_right),
