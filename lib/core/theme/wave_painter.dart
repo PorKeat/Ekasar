@@ -68,3 +68,23 @@ class WavePainter extends CustomPainter {
 
     canvas.drawPath(path, paint);
   }
+
+  @override
+  bool shouldRepaint(covariant WavePainter oldDelegate) {
+    return oldDelegate.animationValue != animationValue;
+  }
+}
+
+class AnimatedWaveBackground extends StatefulWidget {
+  final double height;
+
+  const AnimatedWaveBackground({
+    super.key, 
+    required this.height,
+  });
+
+  @override
+  State<AnimatedWaveBackground> createState() => _AnimatedWaveBackgroundState();
+}
+
+class _AnimatedWaveBackgroundState extends State<AnimatedWaveBackground> with SingleTickerProviderStateMixin {
