@@ -19,3 +19,17 @@ class CameraScreen extends ConsumerWidget {
       body: SafeArea(
         child: cameraState.when(
           data: (controller) {
+            if (controller == null || !controller.value.isInitialized) {
+              return const Center(
+                child: Text(
+                  'Camera not available',
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+            }
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: CameraPreview(controller),
+                ),
+                _buildOverlay(context),
