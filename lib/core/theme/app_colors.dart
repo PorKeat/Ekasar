@@ -30,3 +30,12 @@ class AppColors {
   // Text (legacy placeholders, map these to theme where possible)
   static const Color textPrimary = Color(0xFF1E1E2C);
   static const Color textSecondary = Color(0xFF757575);
+  static const Color textLight = Colors.white;
+
+  // Gradients
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [wavePrimary, primary],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+}
