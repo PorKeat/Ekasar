@@ -12,3 +12,20 @@ class ImagePreviewScreen extends StatefulWidget {
 
   const ImagePreviewScreen({super.key, required this.imageFile});
 
+  @override
+  State<ImagePreviewScreen> createState() => _ImagePreviewScreenState();
+}
+
+class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
+  bool _isGeneratingPdf = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Preview'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.crop_rotate),
+            onPressed: () {
+              // TODO: Implement image rotation
