@@ -106,3 +106,16 @@ class _AnimatedWaveBackgroundState extends State<AnimatedWaveBackground> with Si
   }
 
   @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: widget.height,
+      width: double.infinity,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return CustomPaint(
+            painter: WavePainter(_controller.value),
+            size: Size(double.infinity, widget.height),
+          );
+        },
+      ),
