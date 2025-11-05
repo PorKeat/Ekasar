@@ -119,3 +119,6 @@ class _AnimatedWaveBackgroundState extends State<AnimatedWaveBackground> with Si
           );
         },
       ),
+    );
+  }
+}
