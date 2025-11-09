@@ -19,3 +19,22 @@ class ImageEditorScreen extends StatefulWidget {
 }
 
 class _ImageEditorScreenState extends State<ImageEditorScreen> {
+  late File _currentImage;
+  FilterType _selectedFilter = FilterType.original;
+  bool _isProcessing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentImage = widget.imageFile;
+  }
+
+  Future<void> _cropImage() async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: _currentImage.path,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 100,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Document',
+          toolbarColor: AppColors.primary,
