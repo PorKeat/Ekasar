@@ -18,3 +18,20 @@ import 'package:pdf_scanner_pro/data/repositories/document_repository.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf_scanner_pro/main.dart';
 
+class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final docsAsync = ref.watch(documentsStreamProvider);
+
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              const AnimatedWaveBackground(height: 220),
+              SafeArea(
+                bottom: false,
+                child: Padding(
