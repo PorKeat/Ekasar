@@ -40,3 +40,13 @@ class PDFScannerApp extends ConsumerWidget {
     final themeMode = ref.watch(themeProvider);
 
     return MaterialApp(
+      navigatorKey: navigatorKey,
+      scaffoldMessengerKey: scaffoldMessengerKey,
+      title: 'Ekasar',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
+      home: const AuthWrapper(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
