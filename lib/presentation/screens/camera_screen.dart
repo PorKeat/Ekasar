@@ -33,3 +33,17 @@ class CameraScreen extends ConsumerWidget {
                   child: CameraPreview(controller),
                 ),
                 _buildOverlay(context),
+                _buildControls(context, controller),
+              ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          error: (err, stack) => Center(
+            child: Text(
+              'Error: $err',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
