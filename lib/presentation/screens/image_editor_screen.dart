@@ -38,3 +38,19 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
         AndroidUiSettings(
           toolbarTitle: 'Crop Document',
           toolbarColor: AppColors.primary,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+          hideBottomControls: false,
+        ),
+        IOSUiSettings(
+          title: 'Crop Document',
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      setState(() {
+        _currentImage = File(croppedFile.path);
+        // Reset filter when cropped
+        _selectedFilter = FilterType.original;
