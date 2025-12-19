@@ -27,3 +27,27 @@ class PdfPreviewScreen extends ConsumerStatefulWidget {
   ConsumerState<PdfPreviewScreen> createState() => _PdfPreviewScreenState();
 }
 
+class _PdfPreviewScreenState extends ConsumerState<PdfPreviewScreen> {
+  late final TextEditingController _titleController;
+  bool _isSaving = false;
+  bool _isExtracting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final defaultPrefix = ref.read(settingsProvider).defaultScanPrefix;
+    _titleController = TextEditingController(text: '${defaultPrefix}_${DateTime.now().millisecondsSinceEpoch.toString().substring(5)}');
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _extractText() async {
+    if (widget.images.isEmpty) {
+      CustomSnackBar.show(
+        context,
+        title: 'OCR Unavailable',
+        message: 'No images available for text extraction.',
