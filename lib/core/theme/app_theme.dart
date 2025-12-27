@@ -18,3 +18,13 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.backgroundLight,
       cardColor: AppColors.cardLight,
       canvasColor: AppColors.backgroundLight,
+      textTheme: GoogleFonts.outfitTextTheme().copyWith(
+        displayLarge: GoogleFonts.outfit(
+          color: AppColors.textLightPrimary,
+          fontWeight: FontWeight.bold,
+        ),
+        displayMedium: GoogleFonts.outfit(
+          color: AppColors.textLightPrimary,
+          fontWeight: FontWeight.w700,
+        ),
+        bodyLarge: GoogleFonts.inter(
