@@ -45,3 +45,14 @@ class HomeScreen extends ConsumerWidget {
                           children: [
                             Text(
                               'Ekasar',
+                              style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ).animate().fadeIn(duration: 600.ms).slideY(begin: -0.2, end: 0),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Scan and digitize your documents instantly',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Colors.white.withOpacity(0.8),
+                                  ),
+                            ).animate().fadeIn(delay: 200.ms, duration: 600.ms).slideY(begin: -0.2, end: 0),
