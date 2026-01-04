@@ -56,3 +56,16 @@ class HomeScreen extends ConsumerWidget {
                                     color: Colors.white.withOpacity(0.8),
                                   ),
                             ).animate().fadeIn(delay: 200.ms, duration: 600.ms).slideY(begin: -0.2, end: 0),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.settings, color: Colors.white),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SettingsScreen()),
+                          );
+                        },
+                      ),
+                    ],
