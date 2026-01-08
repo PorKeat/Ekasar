@@ -28,3 +28,13 @@ class AppTheme {
           fontWeight: FontWeight.w700,
         ),
         bodyLarge: GoogleFonts.inter(
+          color: AppColors.textLightPrimary,
+        ),
+        bodyMedium: GoogleFonts.inter(
+          color: AppColors.textLightSecondary,
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
