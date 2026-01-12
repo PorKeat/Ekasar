@@ -122,3 +122,4 @@ class _AnimatedWaveBackgroundState extends State<AnimatedWaveBackground> with Si
     );
   }
 }
+// nit: clean up
