@@ -51,3 +51,15 @@ class _PdfPreviewScreenState extends ConsumerState<PdfPreviewScreen> {
         context,
         title: 'OCR Unavailable',
         message: 'No images available for text extraction.',
+        type: SnackBarType.warning,
+      );
+      return;
+    }
+
+    setState(() => _isExtracting = true);
+    try {
+      final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+      final StringBuffer extractedText = StringBuffer();
+      
+      for (String imagePath in widget.images) {
+        final rawPath = imagePath.startsWith('file://') ? imagePath.replaceFirst('file://', '') : imagePath;
