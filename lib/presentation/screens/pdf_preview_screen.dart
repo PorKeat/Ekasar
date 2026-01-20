@@ -63,3 +63,23 @@ class _PdfPreviewScreenState extends ConsumerState<PdfPreviewScreen> {
       
       for (String imagePath in widget.images) {
         final rawPath = imagePath.startsWith('file://') ? imagePath.replaceFirst('file://', '') : imagePath;
+        final inputImage = InputImage.fromFilePath(rawPath);
+        final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
+        extractedText.writeln(recognizedText.text);
+        extractedText.writeln('\n--- Page Break ---\n');
+      }
+      textRecognizer.close();
+
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Extracted Text'),
+            content: SingleChildScrollView(child: SelectableText(extractedText.toString())),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Close'),
+              ),
+              TextButton(
+                onPressed: () => Share.share(extractedText.toString()),
