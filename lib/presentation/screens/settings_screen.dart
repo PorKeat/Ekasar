@@ -59,3 +59,13 @@ class SettingsScreen extends ConsumerWidget {
                 title: const Text('App Theme'),
                 subtitle: Text(_getThemeName(themeMode)),
                 trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showThemeDialog(context, ref, themeMode),
+              ),
+            ),
+            const SizedBox(height: 24),
+            
+            const _SectionHeader(title: 'Preferences'),
+            Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: ListTile(
+                leading: const Icon(Icons.edit_document, color: AppColors.primary),
