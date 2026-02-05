@@ -69,3 +69,18 @@ class SettingsScreen extends ConsumerWidget {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               child: ListTile(
                 leading: const Icon(Icons.edit_document, color: AppColors.primary),
+                title: const Text('Default Scan Prefix'),
+                subtitle: Text(appSettings.defaultScanPrefix),
+                trailing: const Icon(Icons.edit, size: 20),
+                onTap: () => _showPrefixDialog(context, ref, appSettings.defaultScanPrefix),
+              ),
+            ),
+            const SizedBox(height: 24),
+            
+            const _SectionHeader(title: 'Data Management'),
+            Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              child: ListTile(
+                leading: const Icon(Icons.delete_forever, color: Colors.red),
+                title: const Text('Clear All Documents', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                subtitle: const Text('Wipe the database completely'),
