@@ -54,3 +54,17 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
         _currentImage = File(croppedFile.path);
         // Reset filter when cropped
         _selectedFilter = FilterType.original;
+      });
+    }
+  }
+
+  Future<void> _processAndSave() async {
+    setState(() => _isProcessing = true);
+
+    try {
+      File finalFile = _currentImage;
+
+      if (_selectedFilter != FilterType.original) {
+        // Run in background if possible, but for simplicity await here
+        final bytes = await _currentImage.readAsBytes();
+        var decodedImage = img.decodeImage(bytes);
