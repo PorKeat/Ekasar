@@ -47,3 +47,25 @@ class CameraScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildOverlay(BuildContext context) {
+    return Positioned.fill(
+      child: CustomPaint(
+        painter: ScannerOverlayPainter(),
+      ),
+    ).animate().fadeIn(duration: 500.ms);
+  }
+
+  Widget _buildControls(BuildContext context, CameraController controller) {
+    return Positioned(
+      bottom: 30,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.flash_off, color: Colors.white, size: 30),
+            onPressed: () {
+              // TODO: Toggle flash
