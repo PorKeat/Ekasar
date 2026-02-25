@@ -69,3 +69,25 @@ class CameraScreen extends ConsumerWidget {
             icon: const Icon(Icons.flash_off, color: Colors.white, size: 30),
             onPressed: () {
               // TODO: Toggle flash
+            },
+          ),
+          GestureDetector(
+            onTap: () async {
+              try {
+                final image = await controller.takePicture();
+                if (!context.mounted) return;
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ImagePreviewScreen(imageFile: image),
+                  ),
+                );
+              } catch (e) {
+                if (!context.mounted) return;
+                CustomSnackBar.show(
+                  context,
+                  title: 'Camera Error',
+                  message: 'Unable to capture image. Please try again.',
+                  type: SnackBarType.error,
+                );
+              }
