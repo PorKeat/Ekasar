@@ -84,3 +84,22 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.delete_forever, color: Colors.red),
                 title: const Text('Clear All Documents', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
                 subtitle: const Text('Wipe the database completely'),
+                onTap: () => _showClearDataConfirmation(context, ref),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getThemeName(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light: return 'Light Mode';
+      case ThemeMode.dark: return 'Dark Mode';
+      case ThemeMode.system: return 'System Default';
+    }
+  }
+
+  void _showThemeDialog(BuildContext context, WidgetRef ref, ThemeMode currentTheme) {
+    showDialog(
