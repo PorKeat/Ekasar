@@ -10,3 +10,16 @@ class CustomSnackBar {
     BuildContext context, {
     required String title,
     required String message,
+    required SnackBarType type,
+  }) {
+    final messenger = ScaffoldMessenger.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    Color typeColor;
+    IconData icon;
+
+    switch (type) {
+      case SnackBarType.success:
+        typeColor = AppColors.success;
+        icon = Icons.check_circle_outline_rounded;
+        break;
