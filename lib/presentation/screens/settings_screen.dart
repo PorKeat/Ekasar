@@ -103,3 +103,14 @@ class SettingsScreen extends ConsumerWidget {
 
   void _showThemeDialog(BuildContext context, WidgetRef ref, ThemeMode currentTheme) {
     showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select Theme'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RadioListTile<ThemeMode>(
+              title: const Text('System Default'),
+              value: ThemeMode.system,
+              groupValue: currentTheme,
+              onChanged: (val) {
