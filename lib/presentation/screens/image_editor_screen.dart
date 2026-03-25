@@ -68,3 +68,13 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
         // Run in background if possible, but for simplicity await here
         final bytes = await _currentImage.readAsBytes();
         var decodedImage = img.decodeImage(bytes);
+        
+        if (decodedImage != null) {
+          if (_selectedFilter == FilterType.magicColor) {
+            decodedImage = img.adjustColor(decodedImage, contrast: 1.8, brightness: 1.4, saturation: 1.2);
+          } else if (_selectedFilter == FilterType.bwDocument) {
+            decodedImage = img.adjustColor(decodedImage, contrast: 2.5, brightness: 1.5, saturation: 0.0);
+          } else if (_selectedFilter == FilterType.grayscale) {
+            decodedImage = img.adjustColor(decodedImage, saturation: 0.0);
+          } else if (_selectedFilter == FilterType.lighten) {
+            decodedImage = img.adjustColor(decodedImage, brightness: 1.5, contrast: 1.1);
