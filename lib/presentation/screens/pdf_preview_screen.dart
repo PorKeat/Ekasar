@@ -83,3 +83,22 @@ class _PdfPreviewScreenState extends ConsumerState<PdfPreviewScreen> {
               ),
               TextButton(
                 onPressed: () => Share.share(extractedText.toString()),
+                child: const Text('Share'),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        CustomSnackBar.show(
+          context,
+          title: 'Action Failed',
+          message: 'Unable to share document. Please try again.',
+          type: SnackBarType.error,
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isExtracting = false);
+    }
+  }
