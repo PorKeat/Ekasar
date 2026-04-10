@@ -78,3 +78,25 @@ class _ImageEditorScreenState extends State<ImageEditorScreen> {
             decodedImage = img.adjustColor(decodedImage, saturation: 0.0);
           } else if (_selectedFilter == FilterType.lighten) {
             decodedImage = img.adjustColor(decodedImage, brightness: 1.5, contrast: 1.1);
+          }
+          
+          final outBytes = img.encodeJpg(decodedImage, quality: 90);
+          final tempDir = _currentImage.parent;
+          final outFile = File('${tempDir.path}/filtered_${DateTime.now().millisecondsSinceEpoch}.jpg');
+          await outFile.writeAsBytes(outBytes);
+          finalFile = outFile;
+        }
+      }
+
+      final pdfFile = await PdfGenerator.generatePdfFromImage(finalFile);
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PdfPreviewScreen(
+              pdfFile: pdfFile,
+              images: [finalFile.path],
+            ),
+          ),
+        );
