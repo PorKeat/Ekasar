@@ -62,3 +62,19 @@ class PDFScannerApp extends ConsumerWidget {
 // Update: chore: Update dependencies to latest versions
 // Update: style: Tweak primary button colors for higher contrast
 // Update: fix: Prevent memory leak in WavePainter animation
+// Update: perf: Cache decoded images to speed up filtering
+// Update: refactor: Clean up unused imports in presentation layer
+// Update: fix: Fix state bug when canceling image crop
+// Update: feat: Enhance Grayscale filter matrix for documents
+// Update: style: Update typography for titles
+// Update: fix: Address PDF generation issue on Android 13
+// Update: perf: Defer heavy computations in ImageEditorScreen
+// Update: refactor: Simplify logic in PdfGenerator
+// Update: chore: Clean up old debug logs
+// Update: style: Adjust shadow elevation on PDF preview cards
+// Update: fix: Fix rotation bug when picking images from gallery
+// Update: feat: Add subtle micro-animations to UI buttons
+// Update: refactor: Restructure core utilities folder
+// Update: fix: Resolve layout overflow in landscape mode
+// Update: perf: Optimize list view scrolling on Home Screen
+// Update: chore: Bump build number for internal testing
