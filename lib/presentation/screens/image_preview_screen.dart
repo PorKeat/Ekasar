@@ -29,3 +29,13 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             icon: const Icon(Icons.crop_rotate),
             onPressed: () {
               // TODO: Implement image rotation
+              CustomSnackBar.show(
+                context,
+                title: 'Coming Soon',
+                message: 'Rotate feature is coming soon.',
+                type: SnackBarType.warning,
+              );
+            },
+          ),
+        ],
+      ),
