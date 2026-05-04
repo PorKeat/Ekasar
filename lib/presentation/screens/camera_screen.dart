@@ -109,3 +109,61 @@ class CameraScreen extends ConsumerWidget {
                 ),
               ),
             ),
+          ).animate().scale(duration: 400.ms, curve: Curves.bounceOut),
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.white, size: 30),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ScannerOverlayPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final backgroundPaint = Paint()..color = Colors.black54;
+    final borderPaint = Paint()
+      ..color = AppColors.secondary
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0;
+
+    final rectWidth = size.width * 0.85;
+    final rectHeight = size.height * 0.65;
+    final rectLeft = (size.width - rectWidth) / 2;
+    final rectTop = (size.height - rectHeight) / 2;
+
+    final rect = Rect.fromLTWH(rectLeft, rectTop, rectWidth, rectHeight);
+    
+    // Draw semi-transparent background
+    final bgPath = Path()
+      ..addRect(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..addRect(rect)
+      ..fillType = PathFillType.evenOdd;
+      
+    canvas.drawPath(bgPath, backgroundPaint);
+
+    // Draw frame corners
+    final double cornerLength = 30.0;
+    
+    // Top left
+    canvas.drawLine(Offset(rect.left, rect.top), Offset(rect.left + cornerLength, rect.top), borderPaint);
+    canvas.drawLine(Offset(rect.left, rect.top), Offset(rect.left, rect.top + cornerLength), borderPaint);
+    
+    // Top right
+    canvas.drawLine(Offset(rect.right, rect.top), Offset(rect.right - cornerLength, rect.top), borderPaint);
+    canvas.drawLine(Offset(rect.right, rect.top), Offset(rect.right, rect.top + cornerLength), borderPaint);
+    
+    // Bottom left
+    canvas.drawLine(Offset(rect.left, rect.bottom), Offset(rect.left + cornerLength, rect.bottom), borderPaint);
+    canvas.drawLine(Offset(rect.left, rect.bottom), Offset(rect.left, rect.bottom - cornerLength), borderPaint);
+    
+    // Bottom right
+    canvas.drawLine(Offset(rect.right, rect.bottom), Offset(rect.right - cornerLength, rect.bottom), borderPaint);
+    canvas.drawLine(Offset(rect.right, rect.bottom), Offset(rect.right, rect.bottom - cornerLength), borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}

@@ -28,8 +28,3 @@ class PdfGenerator {
     return file;
   }
 }
-// nit: clean up
-// nit: clean up
-// nit: clean up
-// nit: clean up
-// nit: clean up

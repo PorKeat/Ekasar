@@ -114,3 +114,109 @@ class SettingsScreen extends ConsumerWidget {
               value: ThemeMode.system,
               groupValue: currentTheme,
               onChanged: (val) {
+                if (val != null) ref.read(themeProvider.notifier).setTheme(val);
+                Navigator.pop(context);
+              },
+            ),
+            RadioListTile<ThemeMode>(
+              title: const Text('Light Mode'),
+              value: ThemeMode.light,
+              groupValue: currentTheme,
+              onChanged: (val) {
+                if (val != null) ref.read(themeProvider.notifier).setTheme(val);
+                Navigator.pop(context);
+              },
+            ),
+            RadioListTile<ThemeMode>(
+              title: const Text('Dark Mode'),
+              value: ThemeMode.dark,
+              groupValue: currentTheme,
+              onChanged: (val) {
+                if (val != null) ref.read(themeProvider.notifier).setTheme(val);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showPrefixDialog(BuildContext context, WidgetRef ref, String currentPrefix) {
+    final controller = TextEditingController(text: currentPrefix);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Default Scan Prefix'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            hintText: 'e.g., Scan_, Receipt_',
+            border: OutlineInputBorder(),
+          ),
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () {
+              ref.read(settingsProvider.notifier).setDefaultPrefix(controller.text);
+              Navigator.pop(context);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showClearDataConfirmation(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Clear All Documents?'),
+        content: const Text('Are you absolutely sure you want to delete all scanned documents? This action cannot be undone and will permanently erase your data.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () async {
+              Navigator.pop(context); // Close dialog
+              final repo = ref.read(documentRepositoryProvider);
+              await repo.clearAllDocuments();
+              if (navigatorKey.currentContext != null) {
+                CustomSnackBar.show(
+                  navigatorKey.currentContext!,
+                  title: 'Cleared',
+                  message: 'All documents have been cleared.',
+                  type: SnackBarType.success,
+                );
+              }
+            },
+            child: const Text('DELETE ALL'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  const _SectionHeader({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, bottom: 8),
+      child: Text(
+        title.toUpperCase(),
+        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
+      ),
+    );
+  }
+}

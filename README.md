@@ -1,17 +1,31 @@
-# pdf_scanner_pro
+# Ekasar - PDF Scanner Pro
 
-A new Flutter project.
+Ekasar is a premium, modern, and high-performance document scanning application built with Flutter. It leverages on-device Machine Learning (Google ML Kit Document Scanner API) to automatically detect document boundaries, capture scans, and process them into high-quality PDFs.
 
-## Getting Started
+## 🚀 Features
+- **Smart Edge Detection**: Automatically identifies document boundaries using Google's ML Kit for perfectly cropped scans.
+- **Premium UI/UX**: A cinematic dark-themed interface with smooth micro-animations, dynamic text colors, and an elegant "wave" background.
+- **Document Filters**: 
+  - *Original*: Raw capture.
+  - *Magic*: Boosts contrast and brightness for color documents.
+  - *B & W*: High-contrast filter to crush shadows and make text pop.
+  - *Grayscale*: Clean grayscale conversion.
+  - *Lighten*: Brightens dark or shadowed documents.
+- **Gallery Upload**: Import existing photos and edit/crop them directly within the app.
+- **PDF Generation**: Instantly generate lightweight, high-quality PDF files.
+- **Easy Sharing**: Share your PDFs instantly via native share sheets.
 
-This project is a starting point for a Flutter application.
+## 🛠 Tech Stack
+- **Framework**: Flutter (Dart)
+- **Scanning Engine**: Google ML Kit Vision Document Scanner
+- **PDF Generation**: `pdf` package
+- **Image Processing**: `image` and `image_cropper` packages
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Getting Started
+1. Clone the repository.
+2. Run `flutter pub get` to install dependencies.
+3. Connect your Android or iOS device.
+4. Run `flutter run` to build and install the app.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📝 License
+This project is proprietary and confidential.

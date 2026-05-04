@@ -39,6 +39,3 @@ class AppColors {
     end: Alignment.bottomRight,
   );
 }
-// nit: clean up
-// nit: clean up
-// nit: clean up

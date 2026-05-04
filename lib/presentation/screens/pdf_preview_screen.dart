@@ -102,3 +102,151 @@ class _PdfPreviewScreenState extends ConsumerState<PdfPreviewScreen> {
       if (mounted) setState(() => _isExtracting = false);
     }
   }
+
+  Future<void> _sharePdf() async {
+    await Share.shareXFiles(
+      [XFile(widget.pdfFile.path)],
+      text: 'Sharing ${_titleController.text}.pdf',
+    );
+  }
+
+  Future<void> _savePdf() async {
+    if (_titleController.text.trim().isEmpty) {
+      CustomSnackBar.show(
+        context,
+        title: 'Missing Title',
+        message: 'Please enter a document title to save.',
+        type: SnackBarType.warning,
+      );
+      return;
+    }
+
+    setState(() => _isSaving = true);
+    try {
+      final appDir = await getApplicationDocumentsDirectory();
+      final fileName = '${_titleController.text}_${DateTime.now().millisecondsSinceEpoch}.pdf';
+      final savedFile = await widget.pdfFile.copy(path.join(appDir.path, fileName));
+
+      final doc = ScannedDocument()
+        ..title = _titleController.text
+        ..filePath = savedFile.path
+        ..sizeInBytes = await savedFile.length()
+        ..createdAt = DateTime.now();
+
+      final repo = ref.read(documentRepositoryProvider);
+      await repo.saveDocument(doc);
+
+      if (mounted) {
+        CustomSnackBar.show(
+          context,
+          title: 'Success',
+          message: 'Document saved successfully!',
+          type: SnackBarType.success,
+        );
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
+    } catch (e) {
+      if (mounted) {
+        CustomSnackBar.show(
+          context,
+          title: 'Save Failed',
+          message: 'Unable to save document. Please try again.',
+          type: SnackBarType.error,
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: TextField(
+          controller: _titleController,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Document Title',
+            hintStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.5),
+                ),
+          ),
+        ),
+        actions: [
+          if (_isExtracting)
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary, strokeWidth: 2))),
+            )
+          else
+            IconButton(
+              icon: const Icon(Icons.text_snippet),
+              tooltip: 'Extract Text (OCR)',
+              onPressed: _extractText,
+            ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: _sharePdf,
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: SfPdfViewer.file(
+                    widget.pdfFile,
+                    canShowScrollHead: false,
+                    canShowScrollStatus: false,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ElevatedButton(
+                onPressed: _isSaving ? null : _savePdf,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 56),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: _isSaving 
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                      'Save Document',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

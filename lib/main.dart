@@ -78,3 +78,16 @@ class PDFScannerApp extends ConsumerWidget {
 // Update: fix: Resolve layout overflow in landscape mode
 // Update: perf: Optimize list view scrolling on Home Screen
 // Update: chore: Bump build number for internal testing
+// Update: style: Polish app bar visuals
+// Update: fix: Ensure safe area is respected at bottom of screens
+// Update: feat: Enhance Magic Color filter to boost brightness
+// Update: refactor: Improve separation of concerns in state management
+// Update: fix: Fix permission request flow on iOS
+// Update: style: Update error snackbar background color
+// Update: perf: Preload camera resources on app launch
+// Update: chore: Code formatting pass across all Dart files
+// Update: fix: Resolve issue with saving PDFs to external storage
+// Update: feat: Increase Black & White filter contrast
+// Update: style: Make filter thumbnails circular and premium
+// Update: refactor: Consolidate theme definitions
+// Update: fix: Prevent bottom overflow in filter selection menu
