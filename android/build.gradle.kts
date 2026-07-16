@@ -23,19 +23,23 @@ subprojects {
 subprojects {
     val buildFile = File(project.projectDir, "build.gradle")
     if (buildFile.exists()) {
-        val content = buildFile.readText()
-        if (content.contains("android {") && !content.contains("namespace")) {
-            val manifestFile = File(project.projectDir, "src/main/AndroidManifest.xml")
-            var packageName = "com.example.${project.name.replace("-", "_")}"
-            if (manifestFile.exists()) {
-                val manifestContent = manifestFile.readText()
-                val matcher = Regex("""package\s*=\s*['"]([^'"]+)['"]""").find(manifestContent)
-                if (matcher != null) {
-                    packageName = matcher.groupValues[1]
+        var content = buildFile.readText()
+        if (content.contains("android {")) {
+            if (!content.contains("namespace")) {
+                val manifestFile = File(project.projectDir, "src/main/AndroidManifest.xml")
+                var packageName = "com.example.${project.name.replace("-", "_")}"
+                if (manifestFile.exists()) {
+                    val manifestContent = manifestFile.readText()
+                    val matcher = Regex("""package\s*=\s*['"]([^'"]+)['"]""").find(manifestContent)
+                    if (matcher != null) {
+                        packageName = matcher.groupValues[1]
+                    }
                 }
+                content = content.replaceFirst("android {", "android {\n    namespace = \"$packageName\"\n")
             }
-            val newContent = content.replaceFirst("android {", "android {\n    namespace = \"$packageName\"\n")
-            buildFile.writeText(newContent)
+            content = content.replace(Regex("""compileSdkVersion\s+\d+"""), "compileSdkVersion 36")
+            content = content.replace(Regex("""compileSdk\s+\d+"""), "compileSdk 36")
+            buildFile.writeText(content)
         }
     }
 }
