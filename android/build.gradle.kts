@@ -15,8 +15,24 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
+}
+
+subprojects {
+    project.extensions.findByName("android")?.let { android ->
+        try {
+            val getNamespace = android.javaClass.getMethod("getNamespace")
+            val currentNamespace = getNamespace.invoke(android)
+            if (currentNamespace == null) {
+                val setNamespace = android.javaClass.getMethod("setNamespace", String::class.java)
+                setNamespace.invoke(android, project.group.toString())
+            }
+        } catch (e: Exception) {
+            // Ignore if method doesn't exist
+        }
+    }
 }
 
 tasks.register<Delete>("clean") {
