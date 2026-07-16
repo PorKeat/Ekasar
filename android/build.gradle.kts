@@ -21,16 +21,21 @@ subprojects {
 }
 
 subprojects {
-    project.extensions.findByName("android")?.let { android ->
-        try {
-            val getNamespace = android.javaClass.getMethod("getNamespace")
-            val currentNamespace = getNamespace.invoke(android)
-            if (currentNamespace == null) {
-                val setNamespace = android.javaClass.getMethod("setNamespace", String::class.java)
-                setNamespace.invoke(android, project.group.toString())
+    val buildFile = File(project.projectDir, "build.gradle")
+    if (buildFile.exists()) {
+        val content = buildFile.readText()
+        if (content.contains("android {") && !content.contains("namespace")) {
+            val manifestFile = File(project.projectDir, "src/main/AndroidManifest.xml")
+            var packageName = "com.example.${project.name.replace("-", "_")}"
+            if (manifestFile.exists()) {
+                val manifestContent = manifestFile.readText()
+                val matcher = Regex("""package\s*=\s*['"]([^'"]+)['"]""").find(manifestContent)
+                if (matcher != null) {
+                    packageName = matcher.groupValues[1]
+                }
             }
-        } catch (e: Exception) {
-            // Ignore if method doesn't exist
+            val newContent = content.replaceFirst("android {", "android {\n    namespace = \"$packageName\"\n")
+            buildFile.writeText(newContent)
         }
     }
 }
